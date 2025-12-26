@@ -1,8 +1,14 @@
-// OpenAI AI Service
+// OpenAI AI Service - CohenDad Character
 // NOTE: This requires proper backend implementation (Firebase Cloud Functions)
 // For security, API keys should NEVER be in client-side code
 
 import { TarotCard, DrawnCard, SpreadType } from '../../types';
+import {
+  getTarotReadingPrompt,
+  getDreamAnalysisPrompt,
+  getChatPrompt,
+  getDailyCadencePrompt,
+} from './cohenDadPrompts';
 
 // This is a placeholder - actual implementation should be in Firebase Cloud Functions
 export const generateTarotInterpretation = async (
@@ -26,8 +32,8 @@ export const generateTarotInterpretation = async (
   return data.interpretation;
   */
 
-  // Placeholder response
-  return generatePlaceholderInterpretation(cards, spreadType, question);
+  // Placeholder response with CohenDad character
+  return generateCohenDadInterpretation(cards, spreadType, question);
 };
 
 export const generateDreamAnalysis = async (
@@ -50,41 +56,67 @@ export const chatWithCohenDad = async (
   return `CohenDad: "${message}" hakkında düşüncelim... Evrenin mesajlarını dinliyorum...`;
 };
 
-// Helper: Generate placeholder interpretation
-const generatePlaceholderInterpretation = (
+// Helper: Generate CohenDad interpretation with psychoanalytic depth
+const generateCohenDadInterpretation = (
   cards: DrawnCard[],
   spreadType: SpreadType,
   question?: string
 ): string => {
   const cardNames = cards.map(c => c.card.name.tr).join(', ');
 
-  let interpretation = `**${getSpreadName(spreadType)} Yorumu**\n\n`;
+  let interpretation = `## ${getSpreadName(spreadType)} - CohenDad'dan\n\n`;
 
   if (question) {
-    interpretation += `Sorunuz: "${question}"\n\n`;
+    interpretation += `**Sorun:** "${question}"\n\n`;
   }
 
-  interpretation += `Çekilen Kartlar: ${cardNames}\n\n`;
+  interpretation += `**Kartlar:** ${cardNames}\n\n`;
 
-  interpretation += `Bu kartlar, yaşamınızda önemli bir dönüşüm zamanında olduğunuzu gösteriyor. `;
-  interpretation += `Her kart, farklı bir perspektif sunarak içsel yolculuğunuza ışık tutuyor.\n\n`;
+  // Arketipsel Tema (Jung)
+  interpretation += `### 🌙 Arketipsel Mesaj\n\n`;
+  interpretation += getArchetypalMessage(cards[0]);
+  interpretation += `\n\n`;
 
+  // Bilinçaltı Örüntü (Freud)
+  interpretation += `### 💭 Bilinçaltından Gelen\n\n`;
   cards.forEach((drawnCard, index) => {
     const position = index + 1;
     const reversed = drawnCard.isReversed ? ' (Ters)' : '';
-    interpretation += `**${position}. ${drawnCard.card.name.tr}${reversed}**: `;
+    interpretation += `**${drawnCard.card.name.tr}${reversed}**: `;
     interpretation += drawnCard.isReversed
       ? drawnCard.card.meanings.reversed.tr
       : drawnCard.card.meanings.upright.tr;
     interpretation += `\n\n`;
   });
 
-  interpretation += `**Genel Değerlendirme**: Bu okuma, içsel bilgeliğinize güvenmeniz gerektiğini hatırlatıyor. `;
-  interpretation += `Kartlar, şu anki durumunuzun geçici olduğunu ve değişim rüzgarlarının estiğini gösteriyor.`;
+  // Dönüşüm Fırsatı (Adler)
+  interpretation += `### ✨ Dönüşüm Yolunda\n\n`;
+  interpretation += `Bu kartlar, içsel büyümeniz için bir fırsat sunuyor. `;
+  interpretation += `Belki de aşağılık duygularınızla yüzleşme, belki de güçsüzlük hissettiğiniz bir alanda cesaret bulma zamanı. `;
+  interpretation += `Unutmayın: Her zorluk, bir üstünlük çabasının dönüşüm noktasıdır.\n\n`;
 
-  interpretation += `\n\n_Not: Premium üyelikle AI destekli daha detaylı yorumlar alabilirsiniz._`;
+  // Pratik Rehberlik (Fromm)
+  interpretation += `### 🌱 Günlük Hayata Taşı\n\n`;
+  interpretation += `**Bugün şunu dene:** Kendinize "Bu kart bana neyi hatırlatıyor?" diye sorun. `;
+  interpretation += `Cevap bilinçaltınızdan gelecek. Sevgiyle dinleyin, yargılamadan kabul edin.\n\n`;
+
+  interpretation += `**CohenDad'dan not:** Bu sadece bir kart okuması değil, iç yolculuğunuzun bir adımı. `;
+  interpretation += `Kartlar ayna, asıl güç sizde. 🔮\n\n`;
+
+  interpretation += `_Premium ile CohenDad'le daha derin sohbetler yapabilir, kişiselleştirilmiş rehberlik alabilirsiniz._`;
 
   return interpretation;
+};
+
+const getArchetypalMessage = (card: DrawnCard): string => {
+  const messages = [
+    `${card.card.name.tr}, Jung'un "Gölge" arketipini çağırıyor. İçinizdeki karanlık yönle yüzleşme zamanı. Korkmayın, gölge aydınlanmanın habercisidir.`,
+    `Bu kart, "Kahraman Yolculuğu"nun başlangıcını işaret ediyor. Eski benliğiniz ölmeli ki yeni benlik doğabilsin.`,
+    `"Bilge" arketipi size sesleniyor. İçsel bilgeliğiniz zaten her şeyi biliyor, sadece dinlemeniz gerek.`,
+    `"Anima/Animus" enerjisi aktif. İçinizdeki dişil ve eril dengesi kuruluyor. Bu, bütünleşme zamanı.`,
+    `Kolektif bilinçaltından bir mesaj: Atalarınızın bilgeliği size ulaşmaya çalışıyor.`,
+  ];
+  return messages[Math.floor(Math.random() * messages.length)];
 };
 
 const getSpreadName = (type: SpreadType): string => {
