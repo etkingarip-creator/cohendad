@@ -112,6 +112,35 @@ const HomeScreen: React.FC = () => {
               subtitle="Rüyalarını kaydet"
               onPress={() => navigation.navigate('DreamJournal' as never)}
             />
+            <ActionCard
+              emoji="📊"
+              title="Özel Raporlar"
+              subtitle="Detaylı analizler"
+              onPress={() => navigation.navigate('ProductStore' as never)}
+            />
+          </View>
+        </View>
+
+        {/* Daily Rituals */}
+        <View style={styles.ritualsSection}>
+          <Text style={styles.sectionTitle}>Günlük Ritüeller 🌙</Text>
+          <View style={styles.ritualCards}>
+            <TouchableOpacity
+              style={styles.ritualCard}
+              onPress={() => navigation.navigate('MorningRitual' as never)}
+            >
+              <Text style={styles.ritualEmoji}>🌅</Text>
+              <Text style={styles.ritualTitle}>Sabah Ritüeli</Text>
+              <Text style={styles.ritualSubtitle}>Bugünün enerjisi</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.ritualCard}
+              onPress={() => navigation.navigate('EveningRitual' as never)}
+            >
+              <Text style={styles.ritualEmoji}>🌙</Text>
+              <Text style={styles.ritualTitle}>Akşam Ritüeli</Text>
+              <Text style={styles.ritualSubtitle}>Gün değerlendirmesi</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -302,6 +331,38 @@ const styles = StyleSheet.create({
   premiumArrow: {
     ...typography.h2,
     color: colors.primary.purple,
+  },
+  ritualsSection: {
+    marginBottom: spacing.xl,
+  },
+  ritualCards: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  ritualCard: {
+    flex: 1,
+    backgroundColor: colors.background.modal,
+    padding: spacing.lg,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.primary.purple + '40',
+    alignItems: 'center',
+  },
+  ritualEmoji: {
+    fontSize: 36,
+    marginBottom: spacing.sm,
+  },
+  ritualTitle: {
+    ...typography.h4,
+    color: colors.text.primary,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  ritualSubtitle: {
+    ...typography.caption,
+    color: colors.text.muted,
+    fontSize: 11,
+    textAlign: 'center',
   },
 });
 

@@ -20,9 +20,17 @@ import MainTabNavigator from './MainTabNavigator';
 // Premium Screens
 import PaywallScreen from '../screens/premium/PaywallScreen';
 import SubscriptionPlansScreen from '../screens/premium/SubscriptionPlansScreen';
+import ProductStoreScreen from '../screens/premium/ProductStoreScreen';
+import ProductPurchaseScreen from '../screens/premium/ProductPurchaseScreen';
+import ProductResultScreen from '../screens/premium/ProductResultScreen';
 
 // Result Screens
 import ReadingResultScreen from '../screens/main/ReadingResultScreen';
+
+// Ritual Screens
+import MorningRitualScreen from '../screens/rituals/MorningRitualScreen';
+import EveningRitualScreen from '../screens/rituals/EveningRitualScreen';
+import WeeklyReflectionScreen from '../screens/rituals/WeeklyReflectionScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -65,7 +73,13 @@ const AppNavigator: React.FC = () => {
         {/* Common screens accessible from anywhere */}
         <Stack.Screen name="Paywall" component={PaywallScreen} />
         <Stack.Screen name="SubscriptionPlans" component={SubscriptionPlansScreen} />
+        <Stack.Screen name="ProductStore" component={ProductStoreScreen} />
+        <Stack.Screen name="ProductPurchase" component={ProductPurchaseScreen} />
+        <Stack.Screen name="ProductResult" component={ProductResultScreen} />
         <Stack.Screen name="ReadingResult" component={ReadingResultScreen} />
+        <Stack.Screen name="MorningRitual" component={MorningRitualScreen} />
+        <Stack.Screen name="EveningRitual" component={EveningRitualScreen} />
+        <Stack.Screen name="WeeklyReflection" component={WeeklyReflectionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
