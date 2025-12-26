@@ -206,8 +206,9 @@ export const MAJOR_ARCANA: TarotCard[] = [
   },
 ];
 
-// For now, we'll start with Major Arcana
-// Minor Arcana (56 cards) can be added later
+// TODO: Add remaining Major Arcana cards (10-21)
+// TODO: Add Minor Arcana (56 cards: 14 cards x 4 suits)
+// For MVP, starting with 9 Major Arcana cards is sufficient
 export const TAROT_DECK: TarotCard[] = [...MAJOR_ARCANA];
 
 // Helper to get card by ID

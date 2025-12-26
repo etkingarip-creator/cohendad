@@ -6,11 +6,11 @@ import { colors } from '../theme';
 // Icons - using simple View placeholders for now
 // In production, use react-native-vector-icons or custom SVGs
 
-// Screens - will be imported once created
-// import HomeScreen from '../screens/main/HomeScreen';
-// import TarotReadingScreen from '../screens/main/TarotReadingScreen';
-// import HistoryScreen from '../screens/main/HistoryScreen';
-// import ProfileScreen from '../screens/main/ProfileScreen';
+// Main Screens
+import HomeScreen from '../screens/main/HomeScreen';
+import TarotReadingScreen from '../screens/main/TarotReadingScreen';
+import HistoryScreen from '../screens/main/HistoryScreen';
+import ProfileScreen from '../screens/main/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,12 +26,11 @@ const MainTabNavigator: React.FC = () => {
         tabBarLabelStyle: styles.tabLabel,
       }}
     >
-      {/* Placeholder tabs - will be uncommented once screens are created */}
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Ana Sayfa',
           tabBarIcon: ({ color, size }) => (
             <View style={[styles.icon, { backgroundColor: color }]} />
           ),
@@ -51,7 +50,7 @@ const MainTabNavigator: React.FC = () => {
         name="History"
         component={HistoryScreen}
         options={{
-          tabBarLabel: 'History',
+          tabBarLabel: 'Geçmiş',
           tabBarIcon: ({ color, size }) => (
             <View style={[styles.icon, { backgroundColor: color }]} />
           ),
@@ -61,12 +60,12 @@ const MainTabNavigator: React.FC = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Profil',
           tabBarIcon: ({ color, size }) => (
             <View style={[styles.icon, { backgroundColor: color }]} />
           ),
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
