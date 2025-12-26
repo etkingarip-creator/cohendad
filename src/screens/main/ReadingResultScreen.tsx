@@ -5,6 +5,7 @@ import { colors, typography, spacing, borderRadius } from '../../theme';
 import { getReading, toggleFavorite } from '../../services/firebase/firestore';
 import { generateQuickInterpretation, calculateReadingEnergy } from '../../services/tarot/tarotEngine';
 import { TarotReading } from '../../types';
+import ShareQuoteModal from '../../components/share/ShareQuoteModal';
 
 type RouteParams = {
   ReadingResult: {
@@ -19,6 +20,7 @@ const ReadingResultScreen: React.FC = () => {
 
   const [reading, setReading] = useState<TarotReading | null>(null);
   const [loading, setLoading] = useState(true);
+  const [shareModalVisible, setShareModalVisible] = useState(false);
 
   useEffect(() => {
     loadReading();
@@ -45,17 +47,9 @@ const ReadingResultScreen: React.FC = () => {
     setReading({ ...reading, isFavorite: newFavoriteStatus });
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     if (!reading) return;
-
-    try {
-      const message = generateQuickInterpretation(reading.cards, reading.spreadType);
-      await Share.share({
-        message: `CohenDad Tarot Okuması\n\n${message}`,
-      });
-    } catch (error) {
-      console.error('Share error:', error);
-    }
+    setShareModalVisible(true);
   };
 
   if (loading) {
@@ -150,6 +144,15 @@ const ReadingResultScreen: React.FC = () => {
           <Text style={styles.doneButtonText}>Ana Sayfaya Dön</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Share Quote Modal */}
+      <ShareQuoteModal
+        visible={shareModalVisible}
+        onClose={() => setShareModalVisible(false)}
+        card={reading.cards[0]}
+        interpretation={interpretation}
+        type="daily"
+      />
     </View>
   );
 };

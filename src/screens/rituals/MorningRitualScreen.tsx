@@ -15,6 +15,7 @@ import { DrawnCard } from '../../types';
 import { getDailyCadencePrompt } from '../../services/ai/cohenDadPrompts';
 import { useUser } from '../../contexts/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ShareQuoteModal from '../../components/share/ShareQuoteModal';
 
 const MorningRitualScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -24,6 +25,7 @@ const MorningRitualScreen: React.FC = () => {
   const [interpretation, setInterpretation] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [hasDrawnToday, setHasDrawnToday] = useState(false);
+  const [shareModalVisible, setShareModalVisible] = useState(false);
 
   const fadeAnim = new Animated.Value(0);
   const scaleAnim = new Animated.Value(0.8);
@@ -208,15 +210,36 @@ const MorningRitualScreen: React.FC = () => {
             <Text style={styles.footerText}>
               Akşam, bugünü birlikte değerlendireceğiz 🌙
             </Text>
-            <TouchableOpacity
-              style={styles.footerButton}
-              onPress={() => navigation.navigate('Home' as never)}
-            >
-              <Text style={styles.footerButtonText}>Ana Sayfaya Dön</Text>
-            </TouchableOpacity>
+            <View style={styles.footerButtons}>
+              <TouchableOpacity
+                style={styles.footerButton}
+                onPress={() => setShareModalVisible(true)}
+              >
+                <Text style={styles.footerButtonText}>📤 Paylaş</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.footerButton, styles.footerButtonPrimary]}
+                onPress={() => navigation.navigate('Home' as never)}
+              >
+                <Text style={[styles.footerButtonText, styles.footerButtonTextPrimary]}>
+                  Ana Sayfa
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </ScrollView>
+
+      {/* Share Quote Modal */}
+      {card && (
+        <ShareQuoteModal
+          visible={shareModalVisible}
+          onClose={() => setShareModalVisible(false)}
+          card={card}
+          interpretation={interpretation}
+          type="daily"
+        />
+      )}
     </View>
   );
 };
@@ -448,17 +471,30 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     textAlign: 'center',
   },
+  footerButtons: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
   footerButton: {
+    flex: 1,
     backgroundColor: colors.background.card,
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: spacing.lg,
     borderRadius: borderRadius.full,
     borderWidth: 1,
     borderColor: colors.border.light,
+    alignItems: 'center',
+  },
+  footerButtonPrimary: {
+    backgroundColor: colors.primary.purple,
+    borderColor: colors.primary.purple,
   },
   footerButtonText: {
     ...typography.button,
     color: colors.primary.purple,
+  },
+  footerButtonTextPrimary: {
+    color: colors.background.dark,
   },
 });
 
